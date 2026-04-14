@@ -36,4 +36,3 @@ jobs:
           name: dynapyt-PROJECT_NAME
           path: dynapyt.json
           retention-days: 30
-```
