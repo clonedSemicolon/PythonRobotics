@@ -1,0 +1,46 @@
+# ===================================================================
+# DynaPyt CallGraph - PythonRobotics
+#
+# Add this to your fork of AtsushiSakai/PythonRobotics:
+#   .github/workflows/dynapyt-callgraph.yml
+#
+# Triggers: manual (workflow_dispatch)
+# Artifacts: dynapyt.json (call graph)
+# ===================================================================
+
+name: DynaPyt CallGraph
+
+on:
+  workflow_dispatch:
+
+jobs:
+  callgraph:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install project dependencies
+        run: |
+          pip install -r requirements/requirements.txt
+
+      - name: Setup DynaPyt
+        uses: clonedSemicolon/setup-dynapyt@main
+        with:
+          directory: .
+
+      - name: Run tests
+        run: pytest tests -v
+
+      - name: Upload DynaPyt artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dynapyt-pythonrobotics
+          path: dynapyt.json
+          retention-days: 30
+
