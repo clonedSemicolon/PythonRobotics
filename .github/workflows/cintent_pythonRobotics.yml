@@ -18,7 +18,7 @@ jobs:
         run: |
           pip install -r requirements/requirements.txt
 
-      - uses: clonedSemicolon/seytup-cintent@master          # e.g. schedule/, flask_api/
+      - uses: clonedSemicolon/setup-cintent@main        # e.g. schedule/, flask_api/
 
       # ── Run tests ───────────────────────────────
       - name: Run tests
