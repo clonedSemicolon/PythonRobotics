@@ -1,4 +1,15 @@
+# ===================================================================
+# DynaPyt CallGraph - PythonRobotics
+#
+# Add this to your fork of AtsushiSakai/PythonRobotics:
+#   .github/workflows/dynapyt-callgraph.yml
+#
+# Triggers: manual (workflow_dispatch)
+# Artifacts: dynapyt.json (call graph)
+# ===================================================================
+
 name: DynaPyt CallGraph
+
 on:
   workflow_dispatch:
 
@@ -8,30 +19,28 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python 3.12
-        uses: actions/setup-python@v5
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
         with:
-          python-version: "3.12"
+          python-version: "3.10"
 
-      # ── Install project ──────────────────────────
-      - name: Install dependencies
+      - name: Install project dependencies
         run: |
           pip install -r requirements/requirements.txt
 
-      # ── DynaPyt ──────────────────────────────────
-      - uses: clonedSemicolon/seytup-dynapyt@master
+      - name: Setup DynaPyt
+        uses: clonedSemicolon/seytup-dynapyt@main
         with:
-          directory: PythonRobotics/             # e.g. schedule/, flask_api/
+          directory: .
 
-      # ── Run tests ───────────────────────────────
       - name: Run tests
-        run: pytest tests -v              # e.g. pytest tests/, pytest test_schedule.py
+        run: pytest tests -v
 
-      # ── Collect output ──────────────────────────
-      - name: Upload artifacts
+      - name: Upload DynaPyt artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: dynapyt-PROJECT_NAME
+          name: dynapyt-pythonrobotics
           path: dynapyt.json
           retention-days: 30
+
