@@ -29,9 +29,9 @@ jobs:
           pip install -r requirements/requirements.txt
 
       - name: Setup DynaPyt
-        uses: clonedSemicolon/seytup-dynapyt@main
+        uses: clonedSemicolon/seytup-dynapyt@master
         with:
-          directory: .
+          directory: PythonRobotics
 
       - name: Run tests
         run: pytest tests -v
