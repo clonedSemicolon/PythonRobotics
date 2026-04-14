@@ -1,4 +1,15 @@
-name: Cintent CallGraph
+# ===================================================================
+# CIntent CallGraph — PythonRobotics
+#
+# Add this to your fork of AtsushiSakai/PythonRobotics:
+#   .github/workflows/cintent-callgraph.yml
+#
+# Triggers: manual (workflow_dispatch)
+# Artifacts: CIntent profiling logs (sysmonitor CSV + eBPF traces)
+# ===================================================================
+
+name: CIntent CallGraph
+
 on:
   workflow_dispatch:
 
@@ -9,26 +20,25 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set up Python 3.12
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v4
         with:
           python-version: "3.12"
 
-      # ── Install project ──────────────────────────
-      - name: Install dependencies
+      # ── Project setup ────────────────────────────────────────
+      - name: Install project dependencies
         run: |
           pip install -r requirements/requirements.txt
 
-      - uses: clonedSemicolon/setup-cintent@main        # e.g. schedule/, flask_api/
+      # ── CIntent profiling ────────────────────────────────────
+      - uses: clonedSemicolon/setup-cintent@main
 
-      # ── Run tests ───────────────────────────────
       - name: Run tests
-        run: pytest tests -v              # e.g. pytest tests/, pytest test_schedule.py
+        run: pytest tests -v
 
-      # ── Collect output ──────────────────────────
-      - name: Upload artifacts
+      - name: Upload CIntent Artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: dynapyt-PROJECT_NAME
-          path: dynapyt.json
+          name: cintent-pythonrobotics
+          path: ${{ env.CINTENT_LOGS }}
           retention-days: 30
