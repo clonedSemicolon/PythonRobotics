@@ -31,7 +31,7 @@ jobs:
       - name: Setup DynaPyt
         uses: clonedSemicolon/seytup-dynapyt@master
         with:
-          directory: PythonRobotics
+          directory: .
 
       - name: Run tests
         run: pytest tests -v
