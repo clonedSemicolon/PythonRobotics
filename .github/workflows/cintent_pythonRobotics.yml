@@ -1,4 +1,4 @@
-name: DynaPyt CallGraph
+name: Cintent CallGraph
 on:
   workflow_dispatch:
 
