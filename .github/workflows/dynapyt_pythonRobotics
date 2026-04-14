@@ -1,0 +1,34 @@
+name: CIntent CallGraph
+
+on:
+  workflow_dispatch:
+
+jobs:
+  callgraph:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      # ── Project setup ────────────────────────────────────────
+      - name: Install dev dependencies
+        run: |
+          pip install -r requirements/requirements.txt
+          pip install -e .
+      # ── CIntent profiling ────────────────────────────────────
+      - uses: clonedSemicolon/setup-cintent@main
+
+      - name: Run tests
+        run: pytest tests -v
+
+      - name: Upload CIntent Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cintent-schedule
+          path: ${{ env.CINTENT_LOGS }}
+          retention-days: 30
