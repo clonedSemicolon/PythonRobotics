@@ -1,5 +1,4 @@
-name: CIntent CallGraph
-
+name: DynaPyt CallGraph
 on:
   workflow_dispatch:
 
@@ -9,26 +8,27 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python 3.10
-        uses: actions/setup-python@v4
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.12"
 
-      # ── Project setup ────────────────────────────────────────
-      - name: Install dev dependencies
+      # ── Install project ──────────────────────────
+      - name: Install dependencies
         run: |
           pip install -r requirements/requirements.txt
-          pip install -e .
-      # ── CIntent profiling ────────────────────────────────────
-      - uses: clonedSemicolon/setup-cintent@main
 
+      - uses: clonedSemicolon/seytup-cintent@master          # e.g. schedule/, flask_api/
+
+      # ── Run tests ───────────────────────────────
       - name: Run tests
-        run: pytest tests -v
+        run: pytest tests -v              # e.g. pytest tests/, pytest test_schedule.py
 
-      - name: Upload CIntent Artifacts
+      # ── Collect output ──────────────────────────
+      - name: Upload artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: cintent-schedule
-          path: ${{ env.CINTENT_LOGS }}
+          name: dynapyt-PROJECT_NAME
+          path: dynapyt.json
           retention-days: 30
