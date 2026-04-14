@@ -29,7 +29,7 @@ jobs:
           pip install -r requirements/requirements.txt
 
       - name: Setup DynaPyt
-        uses: clonedSemicolon/setup-dynapyt@main
+        uses: clonedSemicolon/seytup-dynapyt@main
         with:
           directory: .
 
