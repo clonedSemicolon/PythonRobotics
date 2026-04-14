@@ -20,7 +20,7 @@ jobs:
           pip install -e .
 
       # ── DynaPyt ──────────────────────────────────
-      - uses: clonedSemicolon/seytup-dynapyt@main
+      - uses: clonedSemicolon/seytup-dynapyt@master
         with:
           directory: PythonRobotics/             # e.g. schedule/, flask_api/
 
